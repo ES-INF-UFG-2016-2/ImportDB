@@ -12,6 +12,17 @@ import java.util.Scanner;
  */
 public final class IOController {
     
+    /**
+     * Lê o(s) argumento(s) de linha de comando e o(s) processa, resultando na 
+     * leitura bem sucedida do arquivo de texto para o sistema.
+     *
+     * @param args o(s) argumento(s) de linha de comando
+     *             (caminho absoluto ou relativo do arquivo de texto)
+     * @return o conteúdo do arquivo de texto passado como argumento
+     * @throws IllegalArgumentException quando o usuário comete algum erro ao
+     *                                  usar o programa
+     * @throws FileNotFoundException quando o arquivo especificado não é encontrado
+     */
     public static String recebeDados(String[] args) throws IllegalArgumentException, FileNotFoundException {
 
         if (args.length == 1) {
