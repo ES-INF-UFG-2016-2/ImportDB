@@ -14,13 +14,14 @@ public final class IOController {
     public static void recebeDados(String[] args) throws IllegalArgumentException, FileNotFoundException {
 
         if (args.length == 1) {
-            System.out.println("Arquivo:" + args[0]);
             String content = new Scanner(new File(args[0])).useDelimiter("\\Z").next();
             System.out.println(content);
         }
+        else if (args.length >= 2) {
+            throw new IllegalArgumentException("Argumentos demais, um arquivo por vez.");
+        }
         else {
-            throw new IllegalArgumentException("Nenhum arquivo foi passado como"
-                    + " parâmetro para o programa");
+            throw new IllegalArgumentException("Nenhum arquivo foi passado como parâmetro para o programa");
         }
     }
 }
