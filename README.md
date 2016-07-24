@@ -3,6 +3,8 @@ Importador de dados para o SempreUFG
 
 *Trabalho 5 - Integração de aplicações por importação de dados - Sempre UFG*
 
+[Definição do trabalho (Juliano)](https://github.com/gustavosotnas/ImportDB/wiki/2016-Trabalho-5-IntegraçãodeAplicações.pdf) (PDF)
+
 Objetivo
 --------
 O objetivo do trabalho é importar dados para o BD do SempreUFG. Para isso deve ser construído um software em Java
