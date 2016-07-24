@@ -1,8 +1,9 @@
 package integ1.trab5.importBD.view;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import integ1.trab5.importBD.controller.IOController;
+import integ1.trab5.importBD.service.LogGenerator;
 
 public class ImportBD {
     
@@ -20,7 +21,7 @@ public class ImportBD {
             arquivo = IOController.recebeDados(args);
             IOController.validaConsistenciaDados(arquivo);
         }
-        catch (IllegalArgumentException | FileNotFoundException e) {
+        catch (IllegalArgumentException | IOException e) {
             System.err.println("EXCEÇÃO: " + e.getLocalizedMessage());
         }
     }
