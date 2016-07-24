@@ -1,5 +1,6 @@
 package integ1.trab5.importBD.controller;
 
+import integ1.trab5.importBD.view.ImportBD;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -21,7 +22,20 @@ public final class IOController {
             throw new IllegalArgumentException("Argumentos demais, um arquivo por vez.");
         }
         else {
-            throw new IllegalArgumentException("Nenhum arquivo foi passado como parâmetro para o programa");
+            
+            File arquivoDefault = new File(ImportBD.NOME_ARQUIVO_TEXTO_DEFAULT);
+            
+            if (arquivoDefault.exists() && !arquivoDefault.isDirectory()) {
+                
+                String content = new Scanner(arquivoDefault).useDelimiter("\\Z").next();
+                System.out.println(content);
+            }
+            else {
+
+                throw new IllegalArgumentException("Nenhum arquivo foi passado como parâmetro para o programa e há nenhum \n"
+                        + " "
+                        + "arquivo \"" + ImportBD.NOME_ARQUIVO_TEXTO_DEFAULT + "\" na pasta atual.");
+            }
         }
     }
 }
