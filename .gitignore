@@ -1,3 +1,5 @@
+# Don't ignore this file:
+!lib/postgresql-9.4.1209.jar
 
 # Created by https://www.gitignore.io/api/java,netbeans
 
