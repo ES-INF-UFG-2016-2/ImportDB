@@ -3,7 +3,6 @@ package integ1.trab5.importBD.view;
 import java.io.IOException;
 
 import integ1.trab5.importBD.controller.IOController;
-import integ1.trab5.importBD.service.LogGenerator;
 
 public class ImportBD {
     
