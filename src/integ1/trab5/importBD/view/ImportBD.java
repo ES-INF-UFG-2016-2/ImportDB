@@ -20,7 +20,6 @@ public class ImportBD {
         {
             arquivo = IOController.recebeDados(args);
             IOController.validaConsistenciaDados(arquivo);
-            LogGenerator.generate(LogGenerator.LogCategories.CONS, "O arquivo está ótimo, obrigado!");
         }
         catch (IllegalArgumentException | IOException e) {
             System.err.println("EXCEÇÃO: " + e.getLocalizedMessage());
