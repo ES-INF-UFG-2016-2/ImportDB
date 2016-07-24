@@ -12,11 +12,11 @@ import java.util.Scanner;
  */
 public final class IOController {
     
-    public static void recebeDados(String[] args) throws IllegalArgumentException, FileNotFoundException {
+    public static String recebeDados(String[] args) throws IllegalArgumentException, FileNotFoundException {
 
         if (args.length == 1) {
             String content = new Scanner(new File(args[0])).useDelimiter("\\Z").next();
-            System.out.println(content);
+            return content;
         }
         else if (args.length >= 2) {
             throw new IllegalArgumentException("Argumentos demais, um arquivo por vez.");
@@ -28,7 +28,7 @@ public final class IOController {
             if (arquivoDefault.exists() && !arquivoDefault.isDirectory()) {
                 
                 String content = new Scanner(arquivoDefault).useDelimiter("\\Z").next();
-                System.out.println(content);
+                return content;
             }
             else {
 

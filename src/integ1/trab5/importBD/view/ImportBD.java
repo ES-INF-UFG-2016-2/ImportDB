@@ -12,9 +12,12 @@ public class ImportBD {
         
         System.out.println("==================== ImportBD =====================\n"
                 + "Sistema de importação de dados para Bancos de dados\n");
-        
-        try {
-            IOController.recebeDados(args);
+
+        String arquivo = "";
+
+        try
+        {
+            arquivo = IOController.recebeDados(args);
         }
         catch (IllegalArgumentException | FileNotFoundException e) {
             System.err.println("EXCEÇÃO: " + e.getLocalizedMessage());
