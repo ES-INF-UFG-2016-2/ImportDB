@@ -18,6 +18,7 @@ public class ImportBD {
         try
         {
             arquivo = IOController.recebeDados(args);
+            IOController.validaConsistenciaDados(arquivo);
         }
         catch (IllegalArgumentException | FileNotFoundException e) {
             System.err.println("EXCEÇÃO: " + e.getLocalizedMessage());
