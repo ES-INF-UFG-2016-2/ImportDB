@@ -139,7 +139,7 @@ public class BDService {
          PreparedStatement statement = getConnection().prepareStatement(sql);
         
         statement.setDate(1, (Date) progAcad.getDataInicio());
-        statement.setDate(2, progAcad.getDatafim());
+        statement.setDate(2, (Date) progAcad.getDataFim());
         statement.setString(3, progAcad.getDescricao());
         statement.setString(4, progAcad.getTipoProgAcad());
        
