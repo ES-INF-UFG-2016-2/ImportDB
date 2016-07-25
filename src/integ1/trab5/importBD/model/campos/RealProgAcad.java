@@ -53,4 +53,8 @@ public class RealProgAcad {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public java.sql.Date getDatafim() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
