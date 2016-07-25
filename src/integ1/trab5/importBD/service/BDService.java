@@ -87,7 +87,7 @@ public class BDService {
      * @throws SQLException
      */
     private static void persistirReg1(RegistroTipo1 reg1) throws SQLException {
-             
+
         String sqlEgresso = "INSERT INTO egresso "
                 + "(nome, tipo_doc_identidade, num_doc_identidade, data_nasc, nome_curso, id_egresso)"
                 + " VALUES (?, ?, ?, ?)";
@@ -103,11 +103,11 @@ public class BDService {
         statement.setString(3, reg1.getEgresso4PCampos().getNum_doc_identidade());
         statement.setDate(4, (Date) reg1.getEgresso4PCampos().getData_nasc());
         statement.setString(6, reg1.getEgresso4PCampos().getId_egresso());
-        
+
         statement.execute();
 
         PreparedStatement statementHistorico = getConnection().prepareStatement(sqlHistorico);
-        
+
         statementHistorico.setInt(1, reg1.getHistoricoUFG().getMesAnoIngresso());
         statementHistorico.setInt(2, reg1.getHistoricoUFG().getMesAnoConclusao());
         statementHistorico.setInt(3, reg1.getHistoricoUFG().getNumMatriculaNoCurso());
@@ -123,23 +123,32 @@ public class BDService {
      * @throws SQLException
      */
     private static void persistirReg2(RegistroTipo2 reg2) throws SQLException {
-        Egresso2e3Campos egresso2e3Campos = reg2.getEgresso2e3Campos();
-        ProgramaAcademico progAcad = reg2.getRealProgAcad();
 
-        String sql = "INSERT INTO RealProgAcad WHERE idEgresso = "
-                + egresso2e3Campos.getTipoID()
-                + egresso2e3Campos.getId()
-                + " (dataInicio, dataFim, descricao, tipo) "
-                + "VALUES(?, ?, ?, ?)";
+        String sqlEgresso = "INSERT INTO egresso "
+                + "(tipo_doc_identidade, num_doc_identidade, nome_curso, id_egresso)"
+                + " VALUES (?, ?, ?, ?)";
 
-        PreparedStatement statement = getConnection().prepareStatement(sql);
+        String sqlProgAcad = "INSERT INTO prog_academico WHERE id = ? (id_historico, tipo, data_inicio, data_fim, descricao) "
+                + "VALUES(?, ?, ?, ?, ?)";
 
-        statement.setDate(1, (Date) progAcad.getDataInicio());
-        statement.setDate(2, (Date) progAcad.getDataFim());
-        statement.setString(3, progAcad.getDescricao());
-        statement.setString(4, progAcad.getTipoProgAcad());
+        PreparedStatement statement = getConnection().prepareStatement(sqlEgresso);
+
+        statement.setString(1, reg2.getEgresso2e3Campos().getTipo_doc_identidade());
+        statement.setString(2, reg2.getEgresso2e3Campos().getNum_doc_identidade());
+        statement.setString(3, reg2.getIdCursoCursadoUFG());
+        statement.setString(4, reg2.getEgresso2e3Campos().getId_egresso());
 
         statement.execute();
+
+        PreparedStatement statementProgAcademico = getConnection().prepareStatement(sqlProgAcad);
+        
+        statementProgAcademico.setString(1, reg2.getProgAcademico().getIdHistorico());
+        statementProgAcademico.setString(2, reg2.getProgAcademico().getTipoProgAcad());
+        statementProgAcademico.setDate(3, (Date) reg2.getProgAcademico().getDataInicio());
+        statementProgAcademico.setDate(4, (Date) reg2.getProgAcademico().getDataFim());
+        statementProgAcademico.setString(5, reg2.getProgAcademico().getDescricao());
+
+        statementProgAcademico.execute();
     }
 
     public static Connection getConnection() {

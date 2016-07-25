@@ -4,7 +4,8 @@ package integ1.trab5.importBD.model.campos;
  * Classe que representa o segundo e terceiro campos do Egresso.
  */
 public class Egresso2e3Campos {
-
+    
+    private String id_egresso;
     private String tipo_doc_identidade;
     private String num_doc_identidade;
 
@@ -23,6 +24,12 @@ public class Egresso2e3Campos {
     public void setNum_doc_identidade(String num_doc_identidade) {
         this.num_doc_identidade = num_doc_identidade;
     }
-
     
+     public void setId_egresso(){
+       this.id_egresso =  String.join("-", this.tipo_doc_identidade, this.num_doc_identidade);
+    }
+
+    public String getId_egresso() {
+        return id_egresso;
+    }       
 }

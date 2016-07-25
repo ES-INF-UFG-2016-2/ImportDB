@@ -46,7 +46,11 @@ public class Egresso4PCampos {
         this.data_nasc = data_nasc;
     }
     
-    public String getId_egresso(){
-        return String.join("-", this.tipo_doc_identidade, this.num_doc_identidade);
+    public void setId_egresso(){
+       this.id_egresso =  String.join("-", this.tipo_doc_identidade, this.num_doc_identidade);
     }
+
+    public String getId_egresso() {
+        return id_egresso;
+    }   
 }

@@ -64,6 +64,7 @@ CREATE TABLE public.residencia
 
 CREATE TABLE public.prog_academico
 (
+	id_historico character varying(50) NOT NULL,
   tipo character varying(50) NOT NULL,
   data_inicio date NOT NULL,
   data_fim date NOT NULL,
