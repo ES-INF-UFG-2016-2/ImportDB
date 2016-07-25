@@ -57,7 +57,7 @@ public class BDService {
      * @param dados Array de registros obtidos do arquivo
      * @throws SQLException 
      */
-    public void persistir(ArrayList<CursoImport> dados) throws SQLException{
+    public static void persistir(ArrayList<CursoImport> dados) throws SQLException{
              
         for(CursoImport cursoImport: dados){
             persistirRegistros(cursoImport);
@@ -70,7 +70,7 @@ public class BDService {
      * @param cursoImport conjunto de registros do mesmo Egresso
      * @throws SQLException 
      */
-    private void persistirRegistros(CursoImport cursoImport) throws SQLException{
+    private static void persistirRegistros(CursoImport cursoImport) throws SQLException{
         RegistroTipo1 reg1 = cursoImport.getRegEgressoT1();
         persistirReg1(reg1);
         
@@ -86,7 +86,7 @@ public class BDService {
      * @param reg1 Um RegistroTipo1
      * @throws SQLException 
      */
-    private void persistirReg1(RegistroTipo1 reg1) throws SQLException{
+    private static void persistirReg1(RegistroTipo1 reg1) throws SQLException{
         
         Egresso4PCampos egresso4PCampos = reg1.getEgresso4PCampos();
         HistoricoUFG historico = reg1.getHistoricoUFG();
@@ -104,7 +104,7 @@ public class BDService {
         
         
         String sqlHistorico = "INSERT INTO HistoricoUFG WHERE idEgresso = "+
-                egresso4PCampos.getNome() + 
+                egresso4PCampos.getTipoID() + 
                 egresso4PCampos.getId()+
                 " (anoInicio, anoFim, matricula, trabFinal) "
                 + "VALUES(?, ?, ?, ?)";
@@ -125,7 +125,7 @@ public class BDService {
      * @param reg2 Um RegistroTipo2
      * @throws SQLException 
      */
-    private void persistirReg2(RegistroTipo2 reg2) throws SQLException{
+    private static void persistirReg2(RegistroTipo2 reg2) throws SQLException{
         Egresso2e3Campos egresso2e3Campos = reg2.getEgresso2e3Campos();
         RealProgAcad progAcad = reg2.getRealProgAcad();
         
@@ -146,7 +146,7 @@ public class BDService {
         statement.execute();
     }
     
-    public Connection getConnection() {
+    public static Connection getConnection() {
 		return connection;
 	}
 
