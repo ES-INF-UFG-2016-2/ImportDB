@@ -87,36 +87,33 @@ public class BDService {
      * @throws SQLException
      */
     private static void persistirReg1(RegistroTipo1 reg1) throws SQLException {
-
-        String sql = "INSERT INTO egresso (nome, tipo_doc_identidade, num_doc_identidade, data_nasc, nome_curso, )"
+             
+        String sqlEgresso = "INSERT INTO egresso "
+                + "(nome, tipo_doc_identidade, num_doc_identidade, data_nasc, nome_curso, id_egresso)"
                 + " VALUES (?, ?, ?, ?)";
 
-        String sqlHistorico = "INSERT INTO HistoricoUFG WHERE idEgresso = "
-                + egresso4PCampos.getTipoID()
-                + egresso4PCampos.getId()
-                + " (anoInicio, anoFim, matricula, trabFinal) "
+        String sqlHistorico = "INSERT INTO HistoricoUFG "
+                + "WHERE idEgresso = ? (anoInicio, anoFim, matricula, trabFinal) "
                 + "VALUES(?, ?, ?, ?)";
 
-        Egresso4PCampos egresso4PCampos = reg1.getEgresso4PCampos();
-        HistoricoUFG historico = reg1.getHistoricoUFG();
+        PreparedStatement statement = getConnection().prepareStatement(sqlEgresso);
 
-        PreparedStatement statement = getConnection().prepareStatement(sql);
-
-        statement.setString(1, egresso4PCampos.getNome());
-        statement.setString(2, egresso4PCampos.getTipoID());
-        statement.setString(3, egresso4PCampos.getId());
-        statement.setDate(4, (Date) egresso4PCampos.getDataNasc());
+        statement.setString(1, reg1.getEgresso4PCampos().getNome_egresso());
+        statement.setString(2, reg1.getEgresso4PCampos().getTipo_doc_identidade());
+        statement.setString(3, reg1.getEgresso4PCampos().getNum_doc_identidade());
+        statement.setDate(4, (Date) reg1.getEgresso4PCampos().getData_nasc());
+        statement.setString(6, reg1.getEgresso4PCampos().getId_egresso());
+        
         statement.execute();
 
-        PreparedStatement statementHistorico = getConnection().prepareStatement(sql);
-
-        statementHistorico.setInt(1, historico.getMesAnoIngresso());
-        statementHistorico.setInt(2, historico.getMesAnoConclusao());
-        statementHistorico.setInt(3, historico.getNumMatriculaNoCurso());
-        statementHistorico.setString(4, historico.getTituloTrabalhoFinal());
+        PreparedStatement statementHistorico = getConnection().prepareStatement(sqlHistorico);
+        
+        statementHistorico.setInt(1, reg1.getHistoricoUFG().getMesAnoIngresso());
+        statementHistorico.setInt(2, reg1.getHistoricoUFG().getMesAnoConclusao());
+        statementHistorico.setInt(3, reg1.getHistoricoUFG().getNumMatriculaNoCurso());
+        statementHistorico.setString(4, reg1.getHistoricoUFG().getTituloTrabalhoFinal());
 
         statementHistorico.execute();
-
     }
 
     /**
