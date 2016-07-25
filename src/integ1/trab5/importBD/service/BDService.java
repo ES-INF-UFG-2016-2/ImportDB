@@ -6,7 +6,7 @@ import integ1.trab5.importBD.model.RegistroTipo2;
 import integ1.trab5.importBD.model.campos.Egresso2e3Campos;
 import integ1.trab5.importBD.model.campos.Egresso4PCampos;
 import integ1.trab5.importBD.model.campos.HistoricoUFG;
-import integ1.trab5.importBD.model.campos.RealProgAcad;
+import integ1.trab5.importBD.model.campos.ProgramaAcademico;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -22,13 +22,13 @@ import java.util.ArrayList;
  * @author gustavosotnas
  */
 public class BDService {
-    
+
     private static final String URL = "jdbc:postgresql://localhost:5432/teste?user=usuario&password=senha";
     private static Connection connection;
-    
+
     /**
      * Conecta com o banco de dados, dado a URL predefinida.
-     * 
+     *
      * @return true, se a conexão está ativa e estável; false, caso contrário
      * @throws SQLException quando a conexão falha
      */
@@ -36,10 +36,9 @@ public class BDService {
         Connection conn = DriverManager.getConnection(URL);
         return conn.isValid(0);
     }
-    
+
     public static void executeQuery(String sqlStatement) throws SQLException {
-        
-        if(connectToDB()) {
+        if (connectToDB()) {
             PreparedStatement pstmt = connection.prepareStatement(sqlStatement);
             ResultSet rs = pstmt.executeQuery();
             // Fechar resultado.
@@ -50,104 +49,104 @@ public class BDService {
             connection.close();
         }
     }
-    
+
     /**
-     * Recebe o array de registros, e manda cada conjunto 
-     * de registros(RegistroTipo1 e RegistroTipo2) ao método persistirRegistros
+     * Recebe o array de registros, e manda cada conjunto de
+     * registros(RegistroTipo1 e RegistroTipo2) ao método persistirRegistros
+     *
      * @param dados Array de registros obtidos do arquivo
-     * @throws SQLException 
+     * @throws SQLException
      */
-    public static void persistir(ArrayList<CursoImport> dados) throws SQLException{
-             
-        for(CursoImport cursoImport: dados){
+    public static void persistir(ArrayList<CursoImport> dados) throws SQLException {
+        for (CursoImport cursoImport : dados) {
             persistirRegistros(cursoImport);
         }
-        
     }
-    
+
     /**
      * Recebe o conjunto de registros de um Egresso, e os organiza para gravação
+     *
      * @param cursoImport conjunto de registros do mesmo Egresso
-     * @throws SQLException 
+     * @throws SQLException
      */
-    private static void persistirRegistros(CursoImport cursoImport) throws SQLException{
+    private static void persistirRegistros(CursoImport cursoImport) throws SQLException {
         RegistroTipo1 reg1 = cursoImport.getRegEgressoT1();
         persistirReg1(reg1);
-        
+
         ArrayList<RegistroTipo2> listaReg2 = cursoImport.getRegEgressoT2();
-        
         // Como podem ter vários registros2, persiste todos contidos na lista
-        for(RegistroTipo2 reg2: listaReg2){
+        for (RegistroTipo2 reg2 : listaReg2) {
             persistirReg2(reg2);
         }
     }
+
     /**
      * Persiste os dados do RegistroTipo1
+     *
      * @param reg1 Um RegistroTipo1
-     * @throws SQLException 
+     * @throws SQLException
      */
-    private static void persistirReg1(RegistroTipo1 reg1) throws SQLException{
-        
-        Egresso4PCampos egresso4PCampos = reg1.getEgresso4PCampos();
-        HistoricoUFG historico = reg1.getHistoricoUFG();
-        
-        String sql = "INSERT INTO Egresso (nome, tipoID, id, dataNasc)"
+    private static void persistirReg1(RegistroTipo1 reg1) throws SQLException {
+
+        String sql = "INSERT INTO egresso (nome, tipo_doc_identidade, num_doc_identidade, data_nasc, nome_curso, )"
                 + " VALUES (?, ?, ?, ?)";
 
-	PreparedStatement statement = getConnection().prepareStatement(sql);
-
-	statement.setString(1, egresso4PCampos.getNome());
-	statement.setString(2, egresso4PCampos.getTipoID());
-        statement.setString(3, egresso4PCampos.getId());
-        statement.setDate(4, (Date) egresso4PCampos.getDataNasc());  
-        statement.execute();
-        
-        
-        String sqlHistorico = "INSERT INTO HistoricoUFG WHERE idEgresso = "+
-                egresso4PCampos.getTipoID() + 
-                egresso4PCampos.getId()+
-                " (anoInicio, anoFim, matricula, trabFinal) "
+        String sqlHistorico = "INSERT INTO HistoricoUFG WHERE idEgresso = "
+                + egresso4PCampos.getTipoID()
+                + egresso4PCampos.getId()
+                + " (anoInicio, anoFim, matricula, trabFinal) "
                 + "VALUES(?, ?, ?, ?)";
-        
+
+        Egresso4PCampos egresso4PCampos = reg1.getEgresso4PCampos();
+        HistoricoUFG historico = reg1.getHistoricoUFG();
+
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+
+        statement.setString(1, egresso4PCampos.getNome());
+        statement.setString(2, egresso4PCampos.getTipoID());
+        statement.setString(3, egresso4PCampos.getId());
+        statement.setDate(4, (Date) egresso4PCampos.getDataNasc());
+        statement.execute();
+
         PreparedStatement statementHistorico = getConnection().prepareStatement(sql);
-        
+
         statementHistorico.setInt(1, historico.getMesAnoIngresso());
         statementHistorico.setInt(2, historico.getMesAnoConclusao());
         statementHistorico.setInt(3, historico.getNumMatriculaNoCurso());
         statementHistorico.setString(4, historico.getTituloTrabalhoFinal());
-        
+
         statementHistorico.execute();
-        
+
     }
-    
+
     /**
      * Persiste os dados do RegistroTipo2
+     *
      * @param reg2 Um RegistroTipo2
-     * @throws SQLException 
+     * @throws SQLException
      */
-    private static void persistirReg2(RegistroTipo2 reg2) throws SQLException{
+    private static void persistirReg2(RegistroTipo2 reg2) throws SQLException {
         Egresso2e3Campos egresso2e3Campos = reg2.getEgresso2e3Campos();
-        RealProgAcad progAcad = reg2.getRealProgAcad();
-        
-        
-        String sql = "INSERT INTO RealProgAcad WHERE idEgresso = "+
-                egresso2e3Campos.getTipoID() + 
-                egresso2e3Campos.getId()+
-                " (dataInicio, dataFim, descricao, tipo) "
+        ProgramaAcademico progAcad = reg2.getRealProgAcad();
+
+        String sql = "INSERT INTO RealProgAcad WHERE idEgresso = "
+                + egresso2e3Campos.getTipoID()
+                + egresso2e3Campos.getId()
+                + " (dataInicio, dataFim, descricao, tipo) "
                 + "VALUES(?, ?, ?, ?)";
-        
-         PreparedStatement statement = getConnection().prepareStatement(sql);
-        
+
+        PreparedStatement statement = getConnection().prepareStatement(sql);
+
         statement.setDate(1, (Date) progAcad.getDataInicio());
         statement.setDate(2, (Date) progAcad.getDataFim());
         statement.setString(3, progAcad.getDescricao());
         statement.setString(4, progAcad.getTipoProgAcad());
-       
+
         statement.execute();
     }
-    
+
     public static Connection getConnection() {
-		return connection;
-	}
+        return connection;
+    }
 
 }

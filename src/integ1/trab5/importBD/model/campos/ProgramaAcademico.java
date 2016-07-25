@@ -8,12 +8,13 @@ import java.util.Date;
  *
  * @author gustavosotnas
  */
-public class RealProgAcad {
+public class ProgramaAcademico {
 
     private String tipoProgAcad;
     private Date dataInicio;
     private Date dataFim;
     private String descricao;
+    private String idHistorico;
 
     public String getTipoProgAcad() {
         return tipoProgAcad;
@@ -54,5 +55,11 @@ public class RealProgAcad {
         this.descricao = descricao;
     }
 
-  
+    public String getIdHistorico() {
+        return idHistorico;
+    }
+
+    public void setIdHistorico(String idHistorico) {
+        this.idHistorico = idHistorico;
+    }        
 }

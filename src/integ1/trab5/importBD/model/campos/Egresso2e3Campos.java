@@ -2,27 +2,27 @@ package integ1.trab5.importBD.model.campos;
 
 /**
  * Classe que representa o segundo e terceiro campos do Egresso.
- *
- * @author gustavosotnas
  */
 public class Egresso2e3Campos {
 
-    private String tipoID;
-    private String id;
+    private String tipo_doc_identidade;
+    private String num_doc_identidade;
 
-    public String getTipoID() {
-        return tipoID;
+    public String getTipo_doc_identidade() {
+        return tipo_doc_identidade;
     }
 
-    public void setTipoID(String tipoID) {
-        this.tipoID = tipoID;
+    public void setTipo_doc_identidade(String tipo_doc_identidade) {
+        this.tipo_doc_identidade = tipo_doc_identidade;
     }
 
-    public String getId() {
-        return id;
+    public String getNum_doc_identidade() {
+        return num_doc_identidade;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setNum_doc_identidade(String num_doc_identidade) {
+        this.num_doc_identidade = num_doc_identidade;
     }
+
+    
 }
