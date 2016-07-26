@@ -25,6 +25,7 @@ public class RegistroTipo2 {
         this.realProgAcad = new RealProgAcad();
     }
 
+
     public Egresso2e3Campos getEgresso2e3Campos() {
         return egresso2e3Campos;
     }
