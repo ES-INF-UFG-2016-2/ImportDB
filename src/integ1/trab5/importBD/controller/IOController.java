@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -108,7 +109,7 @@ public final class IOController {
         }
     }
 
-    public static DadosImportados convertToObject(String arquivo) {
+    public static DadosImportados convertToObject(String arquivo) throws IOException {
         DadosImportados dados = ImportService.convertCSVtoObject(arquivo);
         return dados;
     }
