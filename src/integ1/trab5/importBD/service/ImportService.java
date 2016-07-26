@@ -7,7 +7,8 @@ import integ1.trab5.importBD.model.RegistroTipo2;
 import integ1.trab5.importBD.model.campos.Egresso2e3Campos;
 import integ1.trab5.importBD.model.campos.Egresso4PCampos;
 import integ1.trab5.importBD.model.campos.HistoricoUFG;
-import integ1.trab5.importBD.model.campos.RealProgAcad;
+import integ1.trab5.importBD.model.campos.ProgramaAcademico;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -88,10 +89,10 @@ public class ImportService {
                     Egresso4PCampos egresso4PCampos = new Egresso4PCampos();
                     HistoricoUFG historicoEgresso = new HistoricoUFG();
 
-                    egresso4PCampos.setNome(linha[1]);
-                    egresso4PCampos.setTipoID(linha[2]);
-                    egresso4PCampos.setId(linha[3]);
-                    egresso4PCampos.setDataNasc(new Date(Date.parse(linha[4])));
+                    egresso4PCampos.setNome_egresso(linha[1]);
+                    egresso4PCampos.setTipo_doc_identidade(linha[2]);
+                    egresso4PCampos.setNum_doc_identidade(linha[3]);
+                    egresso4PCampos.setData_nasc(new Date(Date.parse(linha[4])));
 
                     registroTipo1.setEgresso4PCampos(egresso4PCampos);
                     registroTipo1.setNomeCursoUFG(linha[5]);
@@ -118,7 +119,7 @@ public class ImportService {
                             
                             //Verifica se o id do Egresso lido é o mesmo id encontrado em um Reg2 do hashmap
                             //(Caso encontre no hashMap um Reg2 sem Reg1)
-                            if(egresso4PCampos.getId() == egresso2e3CamposTmp.getId()){
+                            if(egresso4PCampos.getId_egresso()== egresso2e3CamposTmp.getId_egresso()){
                             
                                 cursoImportTmp = new CursoImport(registroTipo1, cursoImportTmp.getRegEgressoT2());
 
@@ -148,19 +149,19 @@ public class ImportService {
                     RegistroTipo2 registroTipo2 = new RegistroTipo2();
                     Egresso2e3Campos egresso2e3Campos = new Egresso2e3Campos();
                     
-                    egresso2e3Campos.setTipoID(linha[1]);
-                    egresso2e3Campos.setId(linha[2]);
+                    egresso2e3Campos.setTipo_doc_identidade(linha[1]);
+                    egresso2e3Campos.setNum_doc_identidade(linha[2]);
 
                     registroTipo2.setEgresso2e3Campos(egresso2e3Campos);
                     registroTipo2.setIdCursoCursadoUFG(linha[3]);
-                    RealProgAcad realProgAcad = new RealProgAcad();
+                    ProgramaAcademico realProgAcad = new ProgramaAcademico();
                     
                     realProgAcad.setTipoProgAcad(linha[4]);
                     realProgAcad.setDataInicio(new Date(Date.parse(linha[5])));
                     realProgAcad.setDataFim(new Date(Date.parse(linha[6])));
                     realProgAcad.setDescricao(linha[7]);
                     
-                    registroTipo2.setRealProgAcad(realProgAcad);
+                    registroTipo2.setProgAcademico(realProgAcad);
                     
                     listaReg2.add(registroTipo2);
                     
@@ -173,7 +174,7 @@ public class ImportService {
                         Egresso4PCampos egresso4PCamposTmp = reg1tmp.getEgresso4PCampos();
                         
                         //verifica se o id a ser persistido é o mesmo do Egresso encontrado no HashMap
-                        if(egresso2e3Campos.getId() == egresso4PCamposTmp.getId()){
+                        if(egresso2e3Campos.getId_egresso()== egresso4PCamposTmp.getId_egresso()){
                             
                             ArrayList<RegistroTipo2> listaReg2Tmp = cursoImportTmp.getRegEgressoT2();
                             
